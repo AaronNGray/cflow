@@ -18,18 +18,15 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA.
 
-AC_PREREQ(2.61)
+AC_PREREQ(2.69)
 AC_INIT([GNU cflow], [1.4], [bug-cflow@gnu.org])
 AC_CONFIG_SRCDIR([src/cflow.h])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-xz std-options
-silent-rules])
+AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-xz std-options silent-rules])
 AC_CONFIG_HEADER([config.h])
 
 # Enable silent rules by default:
 AM_SILENT_RULES([yes])
-
-gl_EARLY
 
 # Checks for programs.
 AC_PROG_CC
@@ -44,7 +41,6 @@ AC_CHECK_HEADERS([stdlib.h string.h unistd.h locale.h])
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([memmove memset strdup strerror strtol setlocale])
 
-gl_INIT
 MU_DEBUG_MODE
 
 ### Check for Emacs site-lisp directory
@@ -59,6 +55,8 @@ AC_SUBST(lisp_LISP)
 AM_ICONV
 AM_GNU_GETTEXT([external], [need-formatstring-macros])
 AM_GNU_GETTEXT_VERSION(0.17)
+
+AC_FUNC_ALLOCA
 
 # Select a rendition level:
 #  DISTRIB for stable releases (at most one dot in the version number)
@@ -83,9 +81,8 @@ AM_MISSING_PROG([AUTOM4TE], [autom4te])
 
 AC_CONFIG_FILES([
  Makefile
- gnu/Makefile
  src/Makefile
  elisp/Makefile
- po/Makefile.in 
+ po/Makefile.in
  doc/Makefile])
 AC_OUTPUT

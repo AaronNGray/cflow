@@ -1,11 +1,11 @@
 /* This file is part of GNU cflow
    Copyright (C) 1997, 2005, 2007, 2009, 2010, 2011 Sergey Poznyakoff
- 
+
    GNU cflow is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 3 of the License, or
    (at your option) any later version.
- 
+
    GNU cflow is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -87,9 +87,9 @@ static struct argp_option options[] = {
      {"  t",  0, NULL, OPTION_DOC|OPTION_NO_TRANS,
       N_("typedefs (for cross-references only)"), GROUP_ID+3 },
 
-     
+
 #undef GROUP_ID
-#define GROUP_ID 10     
+#define GROUP_ID 10
      { NULL, 0, NULL, 0,
        N_("Parser control:"), GROUP_ID },
      { "use-indentation", 'S', NULL, 0,
@@ -119,7 +119,7 @@ static struct argp_option options[] = {
        "", GROUP_ID+1 },
      { "no-cpp", 0, NULL, OPTION_ALIAS|OPTION_HIDDEN, NULL, GROUP_ID+1 },
 #undef GROUP_ID
-#define GROUP_ID 20          
+#define GROUP_ID 20
      { NULL, 0, NULL, 0,
        N_("Output control:"), GROUP_ID },
      { "number", 'n', NULL, 0,
@@ -153,7 +153,7 @@ static struct argp_option options[] = {
      { "no-omit-symbol-names", OPT_NO_OMIT_SYMBOL_NAMES, NULL, OPTION_HIDDEN,
        "", GROUP_ID+1 },
 #undef GROUP_ID
-#define GROUP_ID 30                 
+#define GROUP_ID 30
      { NULL, 0, NULL, 0,
        N_("Informational options:"), GROUP_ID },
      { "verbose", 'v', NULL, 0,
@@ -162,7 +162,7 @@ static struct argp_option options[] = {
        "", GROUP_ID+1 },
      { "debug", OPT_DEBUG, "NUMBER", OPTION_ARG_OPTIONAL,
        N_("Set debugging level"), GROUP_ID+1 },
-#undef GROUP_ID     
+#undef GROUP_ID
      { 0, }
 };
 
@@ -190,7 +190,7 @@ int print_as_tree;      /* Print as tree */
 int brief_listing;      /* Produce short listing */
 int reverse_tree;       /* Generate reverse tree */
 int max_depth;          /* The depth at which the flowgraph is cut off */
-int emacs_option;       /* Format and check for use with Emacs cflow-mode */ 
+int emacs_option;       /* Format and check for use with Emacs cflow-mode */
 int omit_arguments_option;    /* Omit arguments from function declaration string */
 int omit_symbol_names_option; /* Omit symbol name from symbol declaration string */
 
@@ -260,7 +260,7 @@ symbol_override(const char *str)
      const char *ptr;
      char *name;
      Symbol *sp;
-     
+
      ptr = strchr(str, ':');
      if (!ptr) {
 	  error(0, 0, _("%s: no symbol type supplied"), str);
@@ -309,7 +309,7 @@ static void
 set_print_option(char *str)
 {
      int opt;
-     
+
      opt = find_option_type(print_optype, str, 0);
      if (opt == 0) {
 	  error(0, 0, _("unknown print option: %s"), str);
@@ -329,7 +329,7 @@ number(const char **str_ptr, int base, int count)
      int  c, n;
      unsigned i;
      const char *str = *str_ptr;
-     
+
      for (n = 0; *str && count; count--) {
 	  c = *str++;
 	  if (isdigit(c))
@@ -354,7 +354,7 @@ number(const char **str_ptr, int base, int count)
  *    KEYWORD is one of "begin", "0", ", "1", "end0", "end1",
  *    or an abbreviation thereof,
  *    STR is the value to be assigned to the parameter.
- *  
+ *
  * STR can contain usual C escape sequences plus \e meaning '\033'.
  * Apart from this any character followed by xN suffix (where N is
  * a decimal number) is expanded to the sequence of N such characters.
@@ -382,11 +382,11 @@ parse_level_string(const char *str, char **return_ptr)
      static char text[MAXLEVELINDENT];
      char *p;
      int i, c, num;
-    
+
      p = text;
      memset(text, ' ', sizeof(text));
      text[sizeof(text)-1] = 0;
-     
+
      while (*str) {
 	  switch (*str) {
 	  case '\\':
@@ -459,7 +459,7 @@ set_level_indent(const char *str)
      long n;
      const char *p;
      char *q;
-     
+
      n = strtol(str, &q, 0);
      if (*q == 0 && n > 0) {
 	  char *s = xmalloc(n+1);
@@ -468,7 +468,7 @@ set_level_indent(const char *str)
 	  level_indent[0] = level_indent[1] = s;
 	  return;
      }
-     
+
      p = str;
      while (*p != '=') {
 	  if (*p == 0) {
@@ -478,7 +478,7 @@ set_level_indent(const char *str)
 	  p++;
      }
      ++p;
-    
+
      switch (find_option_type(level_indent_optype, str, p - str - 1)) {
      case LEVEL_BEGIN:
 	  parse_level_string(p, &level_begin);
@@ -519,7 +519,7 @@ static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
 {
      int num;
-     
+
      switch (key) {
      case 'a':
 	  strict_ansi = 1;
@@ -581,7 +581,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
 	  break;
      case 'i':
 	  num = 1;
-	  for (; *arg; arg++) 
+	  for (; *arg; arg++)
 	       switch (*arg) {
 	       case '-':
 	       case '^':
@@ -698,10 +698,10 @@ int
 include_symbol(Symbol *sym)
 {
      int type = 0;
-     
+
      if (!sym)
 	  return 0;
-     
+
      if (sym->type == SymIdentifier) {
 	  if (sym->name[0] == '_' && !(symbol_map & SM_UNDERSCORE))
 	       return 0;
@@ -715,7 +715,7 @@ include_symbol(Symbol *sym)
 
 	  if (!sym->source)
 	       type |= SM_UNDEFINED;
-	  
+
      } else if (sym->type == SymToken) {
 	  if (sym->token_type == TYPE && sym->source)
 	       type |= SM_TYPEDEF;
@@ -734,7 +734,7 @@ xalloc_die(void)
 void
 init()
 {
-     if (level_indent[0] == NULL) 
+     if (level_indent[0] == NULL)
 	  level_indent[0] = "    "; /* 4 spaces */
      if (level_indent[1] == NULL)
 	  level_indent[1] = level_indent[0];
@@ -742,7 +742,7 @@ init()
 	  level_end[0] = "";
      if (level_end[1] == NULL)
 	  level_end[1] = "";
-     
+
      init_lex(debug > 1);
      init_parse();
 }
@@ -760,13 +760,14 @@ main(int argc, char **argv)
 
      set_program_name(argv[0]);
      argp_version_setup("cflow", program_authors);
-     
+
      setlocale(LC_ALL, "");
      bindtextdomain(PACKAGE, LOCALEDIR);
      textdomain(PACKAGE);
-     
+
      register_output("gnu", gnu_output_handler, NULL);
      register_output("posix", posix_output_handler, NULL);
+     register_output("basic", basic_output_handler, NULL);
 
      symbol_map = SM_FUNCTIONS|SM_STATIC|SM_UNDEFINED;
 
@@ -775,7 +776,7 @@ main(int argc, char **argv)
 	       error(1, 0, _("%s: No such output driver"), "posix");
 	  output_init();
      }
-     
+
      sourcerc(&argc, &argv);
      if (argp_parse(&argp, argc, argv, ARGP_IN_ORDER, &index, NULL))
 	  exit(1);
@@ -796,7 +797,7 @@ main(int argc, char **argv)
 		    yyparse();
 	  }
      }
-     
+
      argc -= index;
      argv += index;
 
@@ -811,8 +812,6 @@ main(int argc, char **argv)
      output();
      return 0;
 }
-
-
 
 
 

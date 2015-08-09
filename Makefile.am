@@ -18,22 +18,22 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA.
 
-ACLOCAL_AMFLAGS = -I m4
+#ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = gnu src elisp po doc tests
+SUBDIRS = src po doc tests
 
 EXTRA_DIST = ChangeLog.2007
 
 # Define the following variables in order to use the ChangeLog rule below:
 #  prev_change_log  [optional]  Name of the previous ChangeLog file.
-#  gen_start_date   [optional]  Start ChangeLog from this date. 
+#  gen_start_date   [optional]  Start ChangeLog from this date.
 #  changelog_dir    [mandatory] Directory where to create ChangeLog
 gen_start_date = 2007-06-29
 prev_change_log = ChangeLog.2007
 changelog_dir = .
 
 .PHONY: ChangeLog
-ChangeLog: 
+ChangeLog:
 	if test -d .git; then                                              \
 	  cmd=$(top_srcdir)/build-aux/gitlog-to-changelog;                 \
 	  if test -n "$(gen_start_date)"; then                             \
